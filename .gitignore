@@ -3,7 +3,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-localconfing.py
+
 # C extensions
 *.so
 
@@ -169,3 +169,4 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+localconfig.py
