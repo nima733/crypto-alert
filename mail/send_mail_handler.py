@@ -5,7 +5,7 @@ from email.message import EmailMessage
 from localconfig import APP_PASSWORD
 
 
-def send_smtp_email(subject, body):
+def send_email(subject, body):
     msg = EmailMessage()
     msg.set_content(body)
     msg['subject'] = subject

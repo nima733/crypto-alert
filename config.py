@@ -1,4 +1,3 @@
-url = 'https://api.apilayer.com/fixer/latest'
 
 # roles = {
 #     'archive': True,

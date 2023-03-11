@@ -1,9 +1,10 @@
-from kavenegar import *
+from kavenegar import KavenegarAPI, APIException, HTTPException
+
 from config import roles
 from localconfig import KAVEH_API_KEY
 
 
-def send_sms(text):
+def send_sms_msg(text):
     try:
         api = KavenegarAPI(KAVEH_API_KEY)
         params = {

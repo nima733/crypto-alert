@@ -1,22 +1,15 @@
-import requests
 import json
 from datetime import datetime
-from kave import send_sms
-from localconfig import headers
-from config import url, roles
-from mail import send_smtp_email
+from fixer import get_rates
+from config import roles
+from localconfig import api_key
+from mail import send_email
 from khayyam import JalaliDatetime
+from send_sms import send_sms_msg
 
 
-# send a requests for get crypto price
-def get_rates():
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return json.loads(response.text)
-
-
-# save as json file
 def archive(timestamp, rates):
+    # save as json file
     with open(f'archive/{timestamp}.json', 'w') as f:
         f.write(json.dumps(rates))
 
@@ -32,14 +25,14 @@ def body_email(timestamp, rates):
     body = json.dumps(rates)
     print(subject, ' | ', body)
 
-    send_smtp_email(subject, body)
+    send_email(subject, body)
 
 
 def send_notification(msg):
     # add time to sms msg
     now = JalaliDatetime(datetime.now()).strftime('%y-%b-%d %A  %H:%M')
     msg += now
-    send_sms(msg)
+    send_sms_msg(msg)
 
 
 def check_notify_roles(rates):
@@ -59,7 +52,7 @@ def check_notify_roles(rates):
 
 
 if __name__ == '__main__':
-    req = get_rates()
+    req = get_rates(api_key)
     if roles['archive']:
         archive(req['timestamp'], req['rates'])
     if roles['body_email']['enable']:
